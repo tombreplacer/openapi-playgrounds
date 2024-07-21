@@ -288,19 +288,53 @@ export const $NewsSignatureCreateDto = {
     additionalProperties: false
 } as const;
 
-export const $NewsSignatureDto = {
-    required: ['id'],
+export const $NewsSignatureListItemDto = {
+    required: ['createdBy', 'createdOnUtc', 'filterVisible', 'id', 'itemsCount', 'order', 'published', 'title', 'updatedBy', 'updatedOnUtc'],
     type: 'object',
     properties: {
         id: {
             minLength: 1,
             type: 'string'
+        },
+        title: {
+            minLength: 1,
+            type: 'string'
+        },
+        published: {
+            type: 'boolean'
+        },
+        itemsCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        createdBy: {
+            minLength: 1,
+            type: 'string'
+        },
+        updatedBy: {
+            minLength: 1,
+            type: 'string'
+        },
+        createdOnUtc: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedOnUtc: {
+            type: 'string',
+            format: 'date-time'
+        },
+        filterVisible: {
+            type: 'boolean'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
         }
     },
     additionalProperties: false
 } as const;
 
-export const $NewsSignatureDtoIPagedList = {
+export const $NewsSignatureListItemDtoIPagedList = {
     required: ['items', 'state'],
     type: 'object',
     properties: {
@@ -310,7 +344,7 @@ export const $NewsSignatureDtoIPagedList = {
         items: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/NewsSignatureDto'
+                '$ref': '#/components/schemas/NewsSignatureListItemDto'
             },
             readOnly: true
         }
@@ -329,6 +363,36 @@ export const $NewsSignatureShortDto = {
         title: {
             minLength: 1,
             type: 'string'
+        }
+    },
+    additionalProperties: false
+} as const;
+
+export const $NewsSignatureUpdateDto = {
+    required: ['id', 'isVisibleInFilter', 'order', 'published', 'shortTitle', 'title'],
+    type: 'object',
+    properties: {
+        id: {
+            minLength: 1,
+            type: 'string'
+        },
+        title: {
+            minLength: 1,
+            type: 'string'
+        },
+        shortTitle: {
+            minLength: 1,
+            type: 'string'
+        },
+        published: {
+            type: 'boolean'
+        },
+        isVisibleInFilter: {
+            type: 'boolean'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
         }
     },
     additionalProperties: false

@@ -82,18 +82,36 @@ export type NewsSignatureCreateDto = {
     order: number;
 };
 
-export type NewsSignatureDto = {
+export type NewsSignatureListItemDto = {
     id: string;
+    title: string;
+    published: boolean;
+    itemsCount: number;
+    createdBy: string;
+    updatedBy: string;
+    createdOnUtc: string;
+    updatedOnUtc: string;
+    filterVisible: boolean;
+    order: number;
 };
 
-export type NewsSignatureDtoIPagedList = {
+export type NewsSignatureListItemDtoIPagedList = {
     state: IPagingState;
-    readonly items: Array<NewsSignatureDto>;
+    readonly items: Array<NewsSignatureListItemDto>;
 };
 
 export type NewsSignatureShortDto = {
     id: string;
     title: string;
+};
+
+export type NewsSignatureUpdateDto = {
+    id: string;
+    title: string;
+    shortTitle: string;
+    published: boolean;
+    isVisibleInFilter: boolean;
+    order: number;
 };
 
 export type NewsTagListItemDto = {
@@ -144,7 +162,7 @@ export type NewsGetPagedListResponse = NewsListItemDtoIPagedList;
 
 export type NewsCategoryGetPagedListResponse = NewsCategoryListItemDtoIPagedList;
 
-export type NewsSignatureGetPagedListResponse = NewsSignatureDtoIPagedList;
+export type NewsSignatureGetPagedListResponse = NewsSignatureListItemDtoIPagedList;
 
 export type NewsSignatureCreateData = {
     requestBody?: NewsSignatureCreateDto;
@@ -153,10 +171,16 @@ export type NewsSignatureCreateData = {
 export type NewsSignatureCreateResponse = ApiSuccessResponse;
 
 export type NewsSignatureUpdateData = {
-    requestBody?: unknown;
+    requestBody?: NewsSignatureUpdateDto;
 };
 
 export type NewsSignatureUpdateResponse = ApiSuccessResponse;
+
+export type NewsSignatureRemoveData = {
+    id: string;
+};
+
+export type NewsSignatureRemoveResponse = ApiSuccessResponse;
 
 export type NewsTagGetPagedListResponse = NewsTagListItemDtoIPagedList;
 
@@ -210,7 +234,7 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsSignatureDtoIPagedList;
+                200: NewsSignatureListItemDtoIPagedList;
                 /**
                  * Bad Request
                  */
@@ -240,6 +264,25 @@ export type $OpenApiTs = {
         };
         put: {
             req: NewsSignatureUpdateData;
+            res: {
+                /**
+                 * OK
+                 */
+                200: ApiSuccessResponse;
+                /**
+                 * Bad Request
+                 */
+                400: ApiErrorResponse;
+                /**
+                 * Internal Server Error
+                 */
+                500: ApiErrorResponse;
+            };
+        };
+    };
+    '/admin/api/NewsSignature/{id}': {
+        delete: {
+            req: NewsSignatureRemoveData;
             res: {
                 /**
                  * OK

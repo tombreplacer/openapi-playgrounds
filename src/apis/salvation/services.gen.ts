@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { NewsGetPagedListData, NewsGetPagedListResponse, NewsCategoryGetPagedListResponse, NewsSignatureGetPagedListResponse, NewsSignatureCreateData, NewsSignatureCreateResponse, NewsSignatureUpdateData, NewsSignatureUpdateResponse, NewsTagGetPagedListResponse, UploadsGetFileData, UploadsGetFileResponse } from './types.gen';
+import type { NewsGetPagedListData, NewsGetPagedListResponse, NewsCategoryGetPagedListResponse, NewsSignatureGetPagedListResponse, NewsSignatureCreateData, NewsSignatureCreateResponse, NewsSignatureUpdateData, NewsSignatureUpdateResponse, NewsSignatureRemoveData, NewsSignatureRemoveResponse, NewsTagGetPagedListResponse, UploadsGetFileData, UploadsGetFileResponse } from './types.gen';
 
 export class NewsService {
     /**
@@ -74,7 +74,7 @@ export class NewsCategoryService {
 
 export class NewsSignatureService {
     /**
-     * @returns NewsSignatureDtoIPagedList OK
+     * @returns NewsSignatureListItemDtoIPagedList OK
      * @throws ApiError
      */
     public static newsSignatureGetPagedList(): CancelablePromise<NewsSignatureGetPagedListResponse> {
@@ -119,6 +119,26 @@ export class NewsSignatureService {
             url: '/admin/api/NewsSignature',
             body: data.requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: 'Bad Request',
+                500: 'Internal Server Error'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ApiSuccessResponse OK
+     * @throws ApiError
+     */
+    public static newsSignatureRemove(data: NewsSignatureRemoveData): CancelablePromise<NewsSignatureRemoveResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/NewsSignature/{id}',
+            path: {
+                id: data.id
+            },
             errors: {
                 400: 'Bad Request',
                 500: 'Internal Server Error'
