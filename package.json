@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "openapi": "openapi-ts -i http://localhost:5123/swagger/v1/swagger.json -o ./src/apis/salvation --client axios"
+    "openapi": "openapi-ts -i http://localhost:5123/swagger/v1/swagger.json -o ./src/apis/salvation --request ./src/apis/openapi-request.template --client axios",
+    "openapi2": "openapi-ts -i http://localhost:5123/swagger/v1/swagger.json -o ./src/apis/salvation --client axios"
   },
   "dependencies": {
     "axios": "^1.7.2",
@@ -15,7 +16,7 @@
     "vue": "^3.4.31"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "^0.48.2",
+    "@hey-api/openapi-ts": "^0.51.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",

@@ -9,7 +9,8 @@ export default defineConfig({
     open: false,
     https: false,
     proxy: {
-      '/admin/api': 'http://localhost:5123'
+      '/admin/api': 'http://localhost:5123',
+      '/Uploads': 'http://localhost:5123',
     },
     watch: {
       usePolling: true

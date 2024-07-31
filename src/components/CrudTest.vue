@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NewsCategoryListItemDto, NewsCategoryService,  NewsSignatureListItemDto,  NewsSignatureService, SalvationResponse, UploadsService } from '../apis/salvation'
+import { ApiError, NewsCategoryListItemDto, NewsCategoryService,  NewsSignatureListItemDto,  NewsSignatureService, SalvationResponse, UploadsService } from '../apis/salvation'
 
 const categories = ref<NewsSignatureListItemDto[]>();
 // NewsSignatureService.newsSignatureGetPagedList().then(res=> {
@@ -30,8 +30,12 @@ function update(id: string) {
     shortTitle: 'ААА',
     title: 'БББ'
   }})
-  .then(res=> {
-
+  .catch(err => {
+    
+  })
+  .then(res => {
+    const result = (res as NewsSignatureDtoSalvationResponse)
+    alert(JSON.stringify(result))
   });
 }
 
@@ -42,14 +46,22 @@ function remove(id: string) {
   });
 }
 
+
+function get(id: string) {
+  NewsSignatureService.newsSignatureGetById({id: id})
+  .then(res=> {
+    alert(JSON.stringify(res))
+  });
+}
+
 async  function uploads() {
   try {
-    const result = await UploadsService.uploadsGetFile2()
+    UploadsService.uploadsGetFile()
   .then(e=> {
     console.log('then', e);
     return e;
   })
-  .catch((e) =>{
+  .catch((e: ApiError) =>{
     console.log('catch', e.body);
     return e;
   })
@@ -57,7 +69,7 @@ async  function uploads() {
     console.log('finally')
     return null
   });
-  console.log('result', result)
+  // console.log('result', result)
   }
   catch (e: any) {
     console.log('trycatch', e)
@@ -70,6 +82,7 @@ uploads();
   <button @click="create">CREATE</button>
   <div v-for="cat in categories" >
     <span>{{ cat.title }} </span>   
+    <button @click="get(cat.id)">GET</button>
     <button @click="update(cat.id)">UPDATE</button>
     <button @click="remove(cat.id)">REMOVE</button>
   </div>

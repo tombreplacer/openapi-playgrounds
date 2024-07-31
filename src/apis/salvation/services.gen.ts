@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { NewsGetPagedListData, NewsGetPagedListResponse, NewsCategoryGetPagedListResponse, NewsSignatureGetPagedListResponse, NewsSignatureCreateData, NewsSignatureCreateResponse, NewsSignatureUpdateData, NewsSignatureUpdateResponse, NewsSignatureRemoveData, NewsSignatureRemoveResponse, NewsTagGetPagedListResponse, UploadsGetFileData, UploadsGetFileResponse } from './types.gen';
+import type { NewsGetPagedListData, NewsGetPagedListResponse, NewsCategoryGetPagedListResponse, NewsSignatureGetPagedListResponse, NewsSignatureCreateData, NewsSignatureCreateResponse, NewsSignatureUpdateData, NewsSignatureUpdateResponse, NewsSignatureGetByIdData, NewsSignatureGetByIdResponse, NewsSignatureRemoveData, NewsSignatureRemoveResponse, NewsTagGetPagedListResponse, UploadsGetFileResponse, UploadsGetFile2Response } from './types.gen';
 
 export class NewsService {
     /**
@@ -91,7 +91,7 @@ export class NewsSignatureService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns ApiSuccessResponse OK
+     * @returns SalvationResponse OK
      * @throws ApiError
      */
     public static newsSignatureCreate(data: NewsSignatureCreateData = {}): CancelablePromise<NewsSignatureCreateResponse> {
@@ -110,7 +110,7 @@ export class NewsSignatureService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns ApiSuccessResponse OK
+     * @returns NewsSignatureDtoSalvationResponse OK
      * @throws ApiError
      */
     public static newsSignatureUpdate(data: NewsSignatureUpdateData = {}): CancelablePromise<NewsSignatureUpdateResponse> {
@@ -129,7 +129,27 @@ export class NewsSignatureService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns ApiSuccessResponse OK
+     * @returns NewsSignatureDto OK
+     * @throws ApiError
+     */
+    public static newsSignatureGetById(data: NewsSignatureGetByIdData): CancelablePromise<NewsSignatureGetByIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/NewsSignature/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                400: 'Bad Request',
+                500: 'Internal Server Error'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @returns SalvationResponse OK
      * @throws ApiError
      */
     public static newsSignatureRemove(data: NewsSignatureRemoveData): CancelablePromise<NewsSignatureRemoveResponse> {
@@ -168,18 +188,28 @@ export class NewsTagService {
 
 export class UploadsService {
     /**
-     * @param data The data for the request.
-     * @param data.onlyFilterVisible
      * @returns unknown OK
      * @throws ApiError
      */
-    public static uploadsGetFile(data: UploadsGetFileData = {}): CancelablePromise<UploadsGetFileResponse> {
+    public static uploadsGetFile(): CancelablePromise<UploadsGetFileResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/Uploads',
-            query: {
-                onlyFilterVisible: data.onlyFilterVisible
-            },
+            url: '/Uploads/GetFile',
+            errors: {
+                400: 'Bad Request',
+                500: 'Internal Server Error'
+            }
+        });
+    }
+    
+    /**
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static uploadsGetFile2(): CancelablePromise<UploadsGetFile2Response> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/Uploads/GetFile2',
             errors: {
                 400: 'Bad Request',
                 500: 'Internal Server Error'
