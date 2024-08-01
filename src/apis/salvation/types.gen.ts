@@ -18,6 +18,40 @@ export type MiniatureImageDto = {
     imageMiniaturePillarboxedUri: string;
 };
 
+export type NewsCategoryCreateDto = {
+    title: string;
+    published: boolean;
+    onMainPageBottomSlider: boolean;
+    onRightPanel: boolean;
+    isVisibleInFilter: boolean;
+    order: number;
+};
+
+export type NewsCategoryDto = {
+    id: string;
+    title: string;
+    published: boolean;
+    itemsCount: number;
+    createdBy: string;
+    updatedBy: string;
+    createdOnUtc: string;
+    updatedOnUtc: string;
+    mainPageBottomSlider: boolean;
+    rightPanel: boolean;
+    isVisibleInFilter: boolean;
+    order: number;
+};
+
+export type NewsCategoryDtoSalvationResponse = {
+    success: boolean;
+    message: string;
+    traceId: string;
+    details?: string | null;
+    entityId?: string | null;
+    entityType?: string | null;
+    relatedObject?: NewsCategoryDto;
+};
+
 export type NewsCategoryListItemDto = {
     id: string;
     title: string;
@@ -29,7 +63,7 @@ export type NewsCategoryListItemDto = {
     updatedOnUtc: string;
     mainPageBottomSlider: boolean;
     rightPanel: boolean;
-    filterVisible: boolean;
+    isVisibleInFilter: boolean;
     order: number;
 };
 
@@ -41,6 +75,16 @@ export type NewsCategoryListItemDtoIPagedList = {
 export type NewsCategoryShortDto = {
     id: string;
     title: string;
+};
+
+export type NewsCategoryUpdateDto = {
+    id: string;
+    title: string;
+    published: boolean;
+    mainPageBottomSlider: boolean;
+    rightPanel: boolean;
+    isVisibleInFilter: boolean;
+    order: number;
 };
 
 export type NewsListItemDto = {
@@ -167,57 +211,119 @@ export type SalvationResponse = {
 };
 
 export type NewsGetPagedListData = {
-    categoryTitle?: string;
-    dateFrom?: string;
-    dateTo?: string;
-    minAudioCount?: number;
-    minVideoCount?: number;
-    onBanner?: boolean;
-    onHome?: boolean;
-    order?: QueryOrder;
-    orderDirection?: QueryOrderDirection;
-    pageIndex?: number;
-    pageSize?: number;
-    searchPattern?: string;
-    signatureTitleShort?: string;
-    tagTitle?: string;
+    query?: {
+        CategoryTitle?: string;
+        DateFrom?: string;
+        DateTo?: string;
+        MinAudioCount?: number;
+        MinVideoCount?: number;
+        OnBanner?: boolean;
+        OnHome?: boolean;
+        Order?: QueryOrder;
+        OrderDirection?: QueryOrderDirection;
+        PageIndex?: number;
+        PageSize?: number;
+        SearchPattern?: string;
+        SignatureTitleShort?: string;
+        TagTitle?: string;
+    };
 };
 
 export type NewsGetPagedListResponse = NewsListItemDtoIPagedList;
 
+export type NewsGetPagedListError = SalvationResponse;
+
 export type NewsCategoryGetPagedListResponse = NewsCategoryListItemDtoIPagedList;
+
+export type NewsCategoryGetPagedListError = SalvationResponse;
+
+export type NewsCategoryCreateData = {
+    body?: NewsCategoryCreateDto;
+};
+
+export type NewsCategoryCreateResponse = SalvationResponse;
+
+export type NewsCategoryCreateError = SalvationResponse;
+
+export type NewsCategoryUpdateData = {
+    body?: NewsCategoryUpdateDto;
+};
+
+export type NewsCategoryUpdateResponse = NewsCategoryDtoSalvationResponse;
+
+export type NewsCategoryUpdateError = SalvationResponse;
+
+export type NewsCategoryGetByIdData = {
+    path: {
+        id: string;
+    };
+};
+
+export type NewsCategoryGetByIdResponse = NewsCategoryDto;
+
+export type NewsCategoryGetByIdError = SalvationResponse;
+
+export type NewsCategoryRemoveData = {
+    path: {
+        id: string;
+    };
+};
+
+export type NewsCategoryRemoveResponse = SalvationResponse;
+
+export type NewsCategoryRemoveError = SalvationResponse;
 
 export type NewsSignatureGetPagedListResponse = NewsSignatureListItemDtoIPagedList;
 
+export type NewsSignatureGetPagedListError = SalvationResponse;
+
 export type NewsSignatureCreateData = {
-    requestBody?: NewsSignatureCreateDto;
+    body?: NewsSignatureCreateDto;
 };
 
 export type NewsSignatureCreateResponse = SalvationResponse;
 
+export type NewsSignatureCreateError = SalvationResponse;
+
 export type NewsSignatureUpdateData = {
-    requestBody?: NewsSignatureUpdateDto;
+    body?: NewsSignatureUpdateDto;
 };
 
 export type NewsSignatureUpdateResponse = NewsSignatureDtoSalvationResponse;
 
+export type NewsSignatureUpdateError = SalvationResponse;
+
 export type NewsSignatureGetByIdData = {
-    id: string;
+    path: {
+        id: string;
+    };
 };
 
 export type NewsSignatureGetByIdResponse = NewsSignatureDto;
 
+export type NewsSignatureGetByIdError = SalvationResponse;
+
 export type NewsSignatureRemoveData = {
-    id: string;
+    path: {
+        id: string;
+    };
 };
 
 export type NewsSignatureRemoveResponse = SalvationResponse;
 
+export type NewsSignatureRemoveError = SalvationResponse;
+
 export type NewsTagGetPagedListResponse = NewsTagListItemDtoIPagedList;
+
+export type NewsTagGetPagedListError = SalvationResponse;
 
 export type UploadsGetFileResponse = Array<unknown>;
 
+export type UploadsGetFileError = SalvationResponse;
+
 export type UploadsGetFile2Response = Array<unknown>;
+
+export type UploadsGetFile2Error = SalvationResponse;
 
 export type $OpenApiTs = {
     '/admin/api/News': {
@@ -227,15 +333,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsListItemDtoIPagedList;
+                '200': NewsListItemDtoIPagedList;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
     };
@@ -245,15 +351,85 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsCategoryListItemDtoIPagedList;
+                '200': NewsCategoryListItemDtoIPagedList;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
+            };
+        };
+        post: {
+            req: NewsCategoryCreateData;
+            res: {
+                /**
+                 * OK
+                 */
+                '200': SalvationResponse;
+                /**
+                 * Bad Request
+                 */
+                '400': SalvationResponse;
+                /**
+                 * Internal Server Error
+                 */
+                '500': SalvationResponse;
+            };
+        };
+        put: {
+            req: NewsCategoryUpdateData;
+            res: {
+                /**
+                 * OK
+                 */
+                '200': NewsCategoryDtoSalvationResponse;
+                /**
+                 * Bad Request
+                 */
+                '400': SalvationResponse;
+                /**
+                 * Internal Server Error
+                 */
+                '500': SalvationResponse;
+            };
+        };
+    };
+    '/admin/api/NewsCategory/{id}': {
+        get: {
+            req: NewsCategoryGetByIdData;
+            res: {
+                /**
+                 * OK
+                 */
+                '200': NewsCategoryDto;
+                /**
+                 * Bad Request
+                 */
+                '400': SalvationResponse;
+                /**
+                 * Internal Server Error
+                 */
+                '500': SalvationResponse;
+            };
+        };
+        delete: {
+            req: NewsCategoryRemoveData;
+            res: {
+                /**
+                 * OK
+                 */
+                '200': SalvationResponse;
+                /**
+                 * Bad Request
+                 */
+                '400': SalvationResponse;
+                /**
+                 * Internal Server Error
+                 */
+                '500': SalvationResponse;
             };
         };
     };
@@ -263,15 +439,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsSignatureListItemDtoIPagedList;
+                '200': NewsSignatureListItemDtoIPagedList;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
         post: {
@@ -280,15 +456,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: SalvationResponse;
+                '200': SalvationResponse;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
         put: {
@@ -297,15 +473,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsSignatureDtoSalvationResponse;
+                '200': NewsSignatureDtoSalvationResponse;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
     };
@@ -316,15 +492,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsSignatureDto;
+                '200': NewsSignatureDto;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
         delete: {
@@ -333,15 +509,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: SalvationResponse;
+                '200': SalvationResponse;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
     };
@@ -351,15 +527,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: NewsTagListItemDtoIPagedList;
+                '200': NewsTagListItemDtoIPagedList;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
     };
@@ -369,15 +545,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Array<unknown>;
+                '200': Array<unknown>;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
     };
@@ -387,15 +563,15 @@ export type $OpenApiTs = {
                 /**
                  * OK
                  */
-                200: Array<unknown>;
+                '200': Array<unknown>;
                 /**
                  * Bad Request
                  */
-                400: SalvationResponse;
+                '400': SalvationResponse;
                 /**
                  * Internal Server Error
                  */
-                500: SalvationResponse;
+                '500': SalvationResponse;
             };
         };
     };

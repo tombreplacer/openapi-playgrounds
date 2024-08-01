@@ -1,19 +1,44 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ApiError, NewsCategoryListItemDto, NewsCategoryService,  NewsSignatureListItemDto,  NewsSignatureService, SalvationResponse, UploadsService } from '../apis/salvation'
+import { UploadsService } from '../apis/salvation';
+// import { uploadsGetFile, uploadsGetFile2 } from '../apis/salvation';
+// import { ApiError, NewsCategoryListItemDto, NewsCategoryService,  NewsSignatureListItemDto,  NewsSignatureService, SalvationResponse, uploadsGetFile2, UploadsService } from '../apis/salvation'
 
-const categories = ref<NewsSignatureListItemDto[]>();
-// NewsSignatureService.newsSignatureGetPagedList().then(res=> {
-//   console.log(res)
-//   categories.value = res.items
+// const categories = ref<NewsCategoryListItemDto[]>();
+// NewsCategoryService.newsCategoryGetPagedList().then(res=> {
+//    console.log(res)
+//    categories.value = res.items
 // });
+ 
+async function test() {
+  try {
+
+
+    const {data, error, config, request, status } = await UploadsService.uploadsGetFile();
+    console.log(config);
+    console.log(request);
+    console.log(status);
+    console.log(data);
+    console.log(error);
+    // console.log('data', data)
+    // console.log('error', error)
+
+
+
+  } catch  (e){
+    // console.log(e.body)
+  }
+  
+}
+// test()
 
 function create() {
-  NewsSignatureService.newsSignatureCreate({requestBody: {
-    title: 'УУУ', 
-    order: 0,
+  NewsCategoryService.newsCategoryCreate({requestBody: {
+    title: 'ДЕФОЛТНАЯ РУБРИКА 2', 
+    order: -1000,
     published: true, 
-    shortTitle: 'ЫЫЫ', 
+    onMainPageBottomSlider: true,
+    onRightPanel: true,
     isVisibleInFilter: true}
   })
   .then(res=> {
@@ -22,25 +47,26 @@ function create() {
 }
 
 function update(id: string) {
-  NewsSignatureService.newsSignatureUpdate({requestBody:{
+  NewsCategoryService.newsCategoryUpdate({requestBody:{
     id: id,
     isVisibleInFilter: false,
     order: -1,
     published: false,
-    shortTitle: 'ААА',
+    mainPageBottomSlider: true,
+    rightPanel: true,
     title: 'БББ'
   }})
   .catch(err => {
     
   })
   .then(res => {
-    const result = (res as NewsSignatureDtoSalvationResponse)
+    const result = (res as SalvationResponse)
     alert(JSON.stringify(result))
   });
 }
 
 function remove(id: string) {
-  NewsSignatureService.newsSignatureRemove({id: id})
+  NewsCategoryService.newsCategoryRemove({id: id})
   .then(res=> {
 
   });
@@ -48,37 +74,38 @@ function remove(id: string) {
 
 
 function get(id: string) {
-  NewsSignatureService.newsSignatureGetById({id: id})
+  NewsCategoryService.newsCategoryGetById({id: id})
   .then(res=> {
     alert(JSON.stringify(res))
   });
 }
 
 async  function uploads() {
+  const {data, error } = await UploadsService.uploadsGetFile();
+console.log('result', result)
+console.log('error', error)
   try {
-    UploadsService.uploadsGetFile()
-  .then(e=> {
-    console.log('then', e);
-    return e;
-  })
-  .catch((e: ApiError) =>{
-    console.log('catch', e.body);
-    return e;
-  })
-  .finally(() => {
-    console.log('finally')
-    return null
-  });
-  // console.log('result', result)
+    const {result, error } = await UploadsService.uploadsGetFile();
+
+    // .then(e=> {
+    //   console.log('then', e);
+    // })
+    // .catch((e: ApiError) =>{
+    //   console.log('catch', e.body);
+    // });
+    // .finally(() => {
+    //   console.log('finally')
+    // });
   }
   catch (e: any) {
-    console.log('trycatch', e)
+    console.log('trycatch', e.body)
   }
 }
 uploads();
 </script>
 
 <template>
+  <button @click="test">ZZZZ</button>
   <button @click="create">CREATE</button>
   <div v-for="cat in categories" >
     <span>{{ cat.title }} </span>   

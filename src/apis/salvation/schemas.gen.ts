@@ -69,8 +69,36 @@ export const $MiniatureImageDto = {
     additionalProperties: false
 } as const;
 
-export const $NewsCategoryListItemDto = {
-    required: ['createdBy', 'createdOnUtc', 'filterVisible', 'id', 'itemsCount', 'mainPageBottomSlider', 'order', 'published', 'rightPanel', 'title', 'updatedBy', 'updatedOnUtc'],
+export const $NewsCategoryCreateDto = {
+    required: ['isVisibleInFilter', 'onMainPageBottomSlider', 'onRightPanel', 'order', 'published', 'title'],
+    type: 'object',
+    properties: {
+        title: {
+            minLength: 1,
+            type: 'string'
+        },
+        published: {
+            type: 'boolean'
+        },
+        onMainPageBottomSlider: {
+            type: 'boolean'
+        },
+        onRightPanel: {
+            type: 'boolean'
+        },
+        isVisibleInFilter: {
+            type: 'boolean'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        }
+    },
+    additionalProperties: false
+} as const;
+
+export const $NewsCategoryDto = {
+    required: ['createdBy', 'createdOnUtc', 'id', 'isVisibleInFilter', 'itemsCount', 'mainPageBottomSlider', 'order', 'published', 'rightPanel', 'title', 'updatedBy', 'updatedOnUtc'],
     type: 'object',
     properties: {
         id: {
@@ -110,7 +138,93 @@ export const $NewsCategoryListItemDto = {
         rightPanel: {
             type: 'boolean'
         },
-        filterVisible: {
+        isVisibleInFilter: {
+            type: 'boolean'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        }
+    },
+    additionalProperties: false
+} as const;
+
+export const $NewsCategoryDtoSalvationResponse = {
+    required: ['message', 'success', 'traceId'],
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean'
+        },
+        message: {
+            minLength: 1,
+            type: 'string'
+        },
+        traceId: {
+            minLength: 1,
+            type: 'string'
+        },
+        details: {
+            type: 'string',
+            nullable: true
+        },
+        entityId: {
+            type: 'string',
+            nullable: true
+        },
+        entityType: {
+            type: 'string',
+            nullable: true
+        },
+        relatedObject: {
+            '$ref': '#/components/schemas/NewsCategoryDto'
+        }
+    },
+    additionalProperties: false
+} as const;
+
+export const $NewsCategoryListItemDto = {
+    required: ['createdBy', 'createdOnUtc', 'id', 'isVisibleInFilter', 'itemsCount', 'mainPageBottomSlider', 'order', 'published', 'rightPanel', 'title', 'updatedBy', 'updatedOnUtc'],
+    type: 'object',
+    properties: {
+        id: {
+            minLength: 1,
+            type: 'string'
+        },
+        title: {
+            minLength: 1,
+            type: 'string'
+        },
+        published: {
+            type: 'boolean'
+        },
+        itemsCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        createdBy: {
+            minLength: 1,
+            type: 'string'
+        },
+        updatedBy: {
+            minLength: 1,
+            type: 'string'
+        },
+        createdOnUtc: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedOnUtc: {
+            type: 'string',
+            format: 'date-time'
+        },
+        mainPageBottomSlider: {
+            type: 'boolean'
+        },
+        rightPanel: {
+            type: 'boolean'
+        },
+        isVisibleInFilter: {
             type: 'boolean'
         },
         order: {
@@ -150,6 +264,38 @@ export const $NewsCategoryShortDto = {
         title: {
             minLength: 1,
             type: 'string'
+        }
+    },
+    additionalProperties: false
+} as const;
+
+export const $NewsCategoryUpdateDto = {
+    required: ['id', 'isVisibleInFilter', 'mainPageBottomSlider', 'order', 'published', 'rightPanel', 'title'],
+    type: 'object',
+    properties: {
+        id: {
+            minLength: 1,
+            type: 'string'
+        },
+        title: {
+            minLength: 1,
+            type: 'string'
+        },
+        published: {
+            type: 'boolean'
+        },
+        mainPageBottomSlider: {
+            type: 'boolean'
+        },
+        rightPanel: {
+            type: 'boolean'
+        },
+        isVisibleInFilter: {
+            type: 'boolean'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
         }
     },
     additionalProperties: false
