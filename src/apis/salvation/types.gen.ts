@@ -10,14 +10,6 @@ export type IPagingState = {
     readonly hasNextPage: boolean;
 };
 
-export type MiniatureImageDto = {
-    title: string;
-    author: string | null;
-    imageSourceUri: string;
-    imageMiniatureUri: string;
-    imageMiniaturePillarboxedUri: string;
-};
-
 export type NewsCategoryCreateDto = {
     title: string;
     published: boolean;
@@ -72,11 +64,6 @@ export type NewsCategoryListItemDtoIPagedList = {
     readonly items: Array<NewsCategoryListItemDto>;
 };
 
-export type NewsCategoryShortDto = {
-    id: string;
-    title: string;
-};
-
 export type NewsCategoryUpdateDto = {
     id: string;
     title: string;
@@ -85,27 +72,6 @@ export type NewsCategoryUpdateDto = {
     rightPanel: boolean;
     isVisibleInFilter: boolean;
     order: number;
-};
-
-export type NewsListItemDto = {
-    id: string;
-    title: string;
-    announcement: string;
-    miniature?: MiniatureImageDto;
-    category: NewsCategoryShortDto;
-    tags: Array<NewsTagShortDto>;
-    signature?: NewsSignatureShortDto;
-    publishedOnUtc: string;
-    imagesCount: number;
-    visitsCount: number;
-    pageName: string;
-    videoTagsCount: number;
-    audioTagsCount: number;
-};
-
-export type NewsListItemDtoIPagedList = {
-    state: IPagingState;
-    readonly items: Array<NewsListItemDto>;
 };
 
 export type NewsSignatureCreateDto = {
@@ -159,11 +125,6 @@ export type NewsSignatureListItemDtoIPagedList = {
     readonly items: Array<NewsSignatureListItemDto>;
 };
 
-export type NewsSignatureShortDto = {
-    id: string;
-    title: string;
-};
-
 export type NewsSignatureUpdateDto = {
     id: string;
     title: string;
@@ -191,15 +152,6 @@ export type NewsTagListItemDtoIPagedList = {
     readonly items: Array<NewsTagListItemDto>;
 };
 
-export type NewsTagShortDto = {
-    id: string;
-    title: string;
-};
-
-export type QueryOrder = 'Title' | 'PublishedOn' | 'Random';
-
-export type QueryOrderDirection = 'Ascending' | 'Descending';
-
 export type SalvationResponse = {
     success: boolean;
     message: string;
@@ -210,28 +162,13 @@ export type SalvationResponse = {
     relatedObject?: unknown;
 };
 
-export type NewsGetPagedListData = {
+export type NewsCategoryGetPagedListData = {
     query?: {
-        CategoryTitle?: string;
-        DateFrom?: string;
-        DateTo?: string;
-        MinAudioCount?: number;
-        MinVideoCount?: number;
-        OnBanner?: boolean;
-        OnHome?: boolean;
-        Order?: QueryOrder;
-        OrderDirection?: QueryOrderDirection;
-        PageIndex?: number;
-        PageSize?: number;
-        SearchPattern?: string;
-        SignatureTitleShort?: string;
-        TagTitle?: string;
+        pageIndex?: number;
+        pageSize?: number;
+        searchPattern?: string;
     };
 };
-
-export type NewsGetPagedListResponse = NewsListItemDtoIPagedList;
-
-export type NewsGetPagedListError = SalvationResponse;
 
 export type NewsCategoryGetPagedListResponse = NewsCategoryListItemDtoIPagedList;
 
@@ -272,6 +209,14 @@ export type NewsCategoryRemoveData = {
 export type NewsCategoryRemoveResponse = SalvationResponse;
 
 export type NewsCategoryRemoveError = SalvationResponse;
+
+export type NewsSignatureGetPagedListData = {
+    query?: {
+        pageIndex?: number;
+        pageSize?: number;
+        searchPattern?: string;
+    };
+};
 
 export type NewsSignatureGetPagedListResponse = NewsSignatureListItemDtoIPagedList;
 
@@ -326,27 +271,9 @@ export type UploadsGetFile2Response = Array<unknown>;
 export type UploadsGetFile2Error = SalvationResponse;
 
 export type $OpenApiTs = {
-    '/admin/api/News': {
-        get: {
-            req: NewsGetPagedListData;
-            res: {
-                /**
-                 * OK
-                 */
-                '200': NewsListItemDtoIPagedList;
-                /**
-                 * Bad Request
-                 */
-                '400': SalvationResponse;
-                /**
-                 * Internal Server Error
-                 */
-                '500': SalvationResponse;
-            };
-        };
-    };
     '/admin/api/NewsCategory': {
         get: {
+            req: NewsCategoryGetPagedListData;
             res: {
                 /**
                  * OK
@@ -410,6 +337,10 @@ export type $OpenApiTs = {
                  */
                 '400': SalvationResponse;
                 /**
+                 * Not Found
+                 */
+                '404': SalvationResponse;
+                /**
                  * Internal Server Error
                  */
                 '500': SalvationResponse;
@@ -435,6 +366,7 @@ export type $OpenApiTs = {
     };
     '/admin/api/NewsSignature': {
         get: {
+            req: NewsSignatureGetPagedListData;
             res: {
                 /**
                  * OK

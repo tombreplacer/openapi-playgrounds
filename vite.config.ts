@@ -12,6 +12,9 @@ export default defineConfig({
       '/admin/api': 'http://localhost:5123',
       '/Uploads': 'http://localhost:5123',
     },
+    // proxy: {
+    //   '/api': 'http://192.168.128.37:5001/',
+    // },
     watch: {
       usePolling: true
     }

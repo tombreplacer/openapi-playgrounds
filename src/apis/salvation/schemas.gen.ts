@@ -41,34 +41,6 @@ export const $IPagingState = {
     additionalProperties: false
 } as const;
 
-export const $MiniatureImageDto = {
-    required: ['author', 'imageMiniaturePillarboxedUri', 'imageMiniatureUri', 'imageSourceUri', 'title'],
-    type: 'object',
-    properties: {
-        title: {
-            minLength: 1,
-            type: 'string'
-        },
-        author: {
-            type: 'string',
-            nullable: true
-        },
-        imageSourceUri: {
-            minLength: 1,
-            type: 'string'
-        },
-        imageMiniatureUri: {
-            minLength: 1,
-            type: 'string'
-        },
-        imageMiniaturePillarboxedUri: {
-            minLength: 1,
-            type: 'string'
-        }
-    },
-    additionalProperties: false
-} as const;
-
 export const $NewsCategoryCreateDto = {
     required: ['isVisibleInFilter', 'onMainPageBottomSlider', 'onRightPanel', 'order', 'published', 'title'],
     type: 'object',
@@ -253,22 +225,6 @@ export const $NewsCategoryListItemDtoIPagedList = {
     additionalProperties: false
 } as const;
 
-export const $NewsCategoryShortDto = {
-    required: ['id', 'title'],
-    type: 'object',
-    properties: {
-        id: {
-            minLength: 1,
-            type: 'string'
-        },
-        title: {
-            minLength: 1,
-            type: 'string'
-        }
-    },
-    additionalProperties: false
-} as const;
-
 export const $NewsCategoryUpdateDto = {
     required: ['id', 'isVisibleInFilter', 'mainPageBottomSlider', 'order', 'published', 'rightPanel', 'title'],
     type: 'object',
@@ -296,83 +252,6 @@ export const $NewsCategoryUpdateDto = {
         order: {
             type: 'integer',
             format: 'int32'
-        }
-    },
-    additionalProperties: false
-} as const;
-
-export const $NewsListItemDto = {
-    required: ['announcement', 'audioTagsCount', 'category', 'id', 'imagesCount', 'pageName', 'publishedOnUtc', 'tags', 'title', 'videoTagsCount', 'visitsCount'],
-    type: 'object',
-    properties: {
-        id: {
-            minLength: 1,
-            type: 'string'
-        },
-        title: {
-            minLength: 1,
-            type: 'string'
-        },
-        announcement: {
-            minLength: 1,
-            type: 'string'
-        },
-        miniature: {
-            '$ref': '#/components/schemas/MiniatureImageDto'
-        },
-        category: {
-            '$ref': '#/components/schemas/NewsCategoryShortDto'
-        },
-        tags: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/NewsTagShortDto'
-            }
-        },
-        signature: {
-            '$ref': '#/components/schemas/NewsSignatureShortDto'
-        },
-        publishedOnUtc: {
-            type: 'string',
-            format: 'date-time'
-        },
-        imagesCount: {
-            type: 'integer',
-            format: 'int32'
-        },
-        visitsCount: {
-            type: 'integer',
-            format: 'int32'
-        },
-        pageName: {
-            minLength: 1,
-            type: 'string'
-        },
-        videoTagsCount: {
-            type: 'integer',
-            format: 'int32'
-        },
-        audioTagsCount: {
-            type: 'integer',
-            format: 'int32'
-        }
-    },
-    additionalProperties: false
-} as const;
-
-export const $NewsListItemDtoIPagedList = {
-    required: ['items', 'state'],
-    type: 'object',
-    properties: {
-        state: {
-            '$ref': '#/components/schemas/IPagingState'
-        },
-        items: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/NewsListItemDto'
-            },
-            readOnly: true
         }
     },
     additionalProperties: false
@@ -556,22 +435,6 @@ export const $NewsSignatureListItemDtoIPagedList = {
     additionalProperties: false
 } as const;
 
-export const $NewsSignatureShortDto = {
-    required: ['id', 'title'],
-    type: 'object',
-    properties: {
-        id: {
-            minLength: 1,
-            type: 'string'
-        },
-        title: {
-            minLength: 1,
-            type: 'string'
-        }
-    },
-    additionalProperties: false
-} as const;
-
 export const $NewsSignatureUpdateDto = {
     required: ['id', 'isVisibleInFilter', 'order', 'published', 'shortTitle', 'title'],
     type: 'object',
@@ -664,32 +527,6 @@ export const $NewsTagListItemDtoIPagedList = {
         }
     },
     additionalProperties: false
-} as const;
-
-export const $NewsTagShortDto = {
-    required: ['id', 'title'],
-    type: 'object',
-    properties: {
-        id: {
-            minLength: 1,
-            type: 'string'
-        },
-        title: {
-            minLength: 1,
-            type: 'string'
-        }
-    },
-    additionalProperties: false
-} as const;
-
-export const $QueryOrder = {
-    enum: ['Title', 'PublishedOn', 'Random'],
-    type: 'string'
-} as const;
-
-export const $QueryOrderDirection = {
-    enum: ['Ascending', 'Descending'],
-    type: 'string'
 } as const;
 
 export const $SalvationResponse = {
